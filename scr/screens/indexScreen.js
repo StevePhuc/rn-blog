@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, FlatList, Button, TouchableOpacity } from "reac
 import { Context as BlogContext } from "../context/BlogContext";
 import { Feather } from "@expo/vector-icons";
 
-export default function App() {
+export default ({ navigation }) => {
     const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
 
     return (
@@ -15,24 +15,28 @@ export default function App() {
                 keyExtractor={blogPost => blogPost.title}
                 renderItem={({ item }) => {
                     return (
-                        <View style={styles.row}>
-                            <Text style={styles.title}>
-                                {item.title} - {item.id}
-                            </Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    deleteBlogPost(item.id);
-                                }}
-                            >
-                                <Feather style={styles.icon} name="trash" />
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("Show", { id: item.id })}
+                        >
+                            <View style={styles.row}>
+                                <Text style={styles.title}>
+                                    {item.title} - {item.id}
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        deleteBlogPost(item.id);
+                                    }}
+                                >
+                                    <Feather style={styles.icon} name="trash" />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                     );
                 }}
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     row: {
