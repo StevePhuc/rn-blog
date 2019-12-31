@@ -3,7 +3,7 @@ import jsonServer from '../api/jsonServer'
 
 const blogReducer = (state, action) => {
     switch (action.type) {
-        case "get_blogPost":
+        case "get_blogposts":
             return action.payload
         case "edit_blogPost":
             return state.map((blogPost) => {
